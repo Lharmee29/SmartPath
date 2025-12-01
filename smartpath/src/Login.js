@@ -9,8 +9,9 @@ const handleLogin = (event, username, password) => {
     if (res.data) {
       // ⭐ Save logged-in user to localStorage
       localStorage.setItem("userId", res.data._id);
-      localStorage.setItem("userName", `${res.data.firstName} ${res.data.lastName}`);
+      localStorage.setItem("userFullName", `${res.data.firstName} ${res.data.lastName}`);
       localStorage.setItem("username", res.data.username);
+      localStorage.setItem("user", res.data);
 
       alert("Login Successful");
       
