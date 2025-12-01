@@ -14,7 +14,8 @@ const handleLogin = (event, username, password) => {
       localStorage.setItem("user", res.data);
 
       alert("Login Successful");
-      
+      window.location.href = "/Dashboard";
+
       // window.location.href = "/createTeam"
     } else {
       alert("Wrong Credentials");
