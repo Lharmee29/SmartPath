@@ -3,16 +3,23 @@ import {React, useState} from "react";
 import axios from 'axios'
 
 const handleLogin = (event, username, password) => {
-    axios.get('http://localhost:9000/getUser', { params: { username, password}})
-        .then((res) => {
-            if (res.data) {
-                alert('Login Successful')
-            }
-            else {
-                alert('Wrong Credentials')
-            }
-        })
-        .catch((err) => alert('Error in Login'))
+   axios
+  .get("http://localhost:9000/getUser", { params: { username, password } })
+  .then((res) => {
+    if (res.data) {
+      // ⭐ Save logged-in user to localStorage
+      localStorage.setItem("userId", res.data._id);
+      localStorage.setItem("userName", `${res.data.firstName} ${res.data.lastName}`);
+      localStorage.setItem("username", res.data.username);
+
+      alert("Login Successful");
+      
+      // window.location.href = "/createTeam"
+    } else {
+      alert("Wrong Credentials");
+    }
+  })
+  .catch((err) => alert("Error in Login"));
 }
 
 const Login = () => {

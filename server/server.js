@@ -5,7 +5,7 @@ const User = require('./UserSchema');
 app.use(express.json());
 app.use(cors())
 app.listen(9000, ()=> {
-    console.log('Server Started at ${9000}')
+    console.log('Server Started at {9000}')
 })
 
 const mongoose = require('mongoose');
