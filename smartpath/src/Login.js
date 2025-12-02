@@ -7,16 +7,15 @@ const handleLogin = (event, username, password) => {
   .get("http://localhost:9000/getUser", { params: { username, password } })
   .then((res) => {
     if (res.data) {
-      // ⭐ Save logged-in user to localStorage
+      //Save logged-in user to localStorage
       localStorage.setItem("userId", res.data._id);
       localStorage.setItem("userFullName", `${res.data.firstName} ${res.data.lastName}`);
       localStorage.setItem("username", res.data.username);
       localStorage.setItem("user", res.data);
 
       alert("Login Successful");
+       //REDIRECT TO DASHBOARD AFTER SUCCESSFUL LOGIN
       window.location.href = "/Dashboard";
-
-      // window.location.href = "/createTeam"
     } else {
       alert("Wrong Credentials");
     }
@@ -59,3 +58,4 @@ const Login = () => {
     );
 }
 export default Login; 
+
