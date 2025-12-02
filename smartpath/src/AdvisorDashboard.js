@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
-function Advisor() {
+function AdvisorDashboard() {
   const [plans, setPlans] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
@@ -61,15 +61,16 @@ function Advisor() {
         <tbody>
           {plans.map((plan) => (
             <tr key={plan._id}>
+              {/* change fields later to match ScheduleSchema */}
               <td>
                 {plan.owner?.firstName} {plan.owner?.lastName} (
                 {plan.owner?.username})
               </td>
               <td>{plan.name || "Untitled plan"}</td>
               <td>
-                <Link to={`/advisor/plan/${plan._id}`}>
-                  <button>View Plan</button>
-                </Link>
+                <button>
+                  View Plan
+                </button>
               </td>
             </tr>
           ))}
@@ -79,4 +80,4 @@ function Advisor() {
   );
 }
 
-export default Advisor;
+export default AdvisorDashboard;

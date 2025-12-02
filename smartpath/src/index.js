@@ -8,8 +8,10 @@ import Dashboard from './Dashboard';
 import CreatePlan from './CreatePlan';
 import ViewPlans from './ViewPlans';
 import CommunityPlans from './CommunityPlans';
-import Advisor from './Advisor';
-
+import AdvisorFeedback from "./AdvisorFeedback";
+import AdvisorDashboard from "./AdvisorDashboard";
+import Advisor from "./Advisor";
+import AdvisorPlans from "./AdvisorPlans";
 import reportWebVitals from './reportWebVitals';
 import 'bootstrap/dist/css/bootstrap.css';
 import {Route, createBrowserRouter, createRoutesFromElements, RouterProvider} from 'react-router-dom';
@@ -26,7 +28,10 @@ const router = createBrowserRouter(
     <Route path="/CreatePlan" element={<CreatePlan />} />
     <Route path="/ViewPlans" element={<ViewPlans />} />
     <Route path="/CommunityPlans" element={<CommunityPlans />} />
-    <Route path="/Advisor" element={<Advisor />} />
+    <Route path="/AdvisorFeedback" element={<AdvisorFeedback />} />
+    <Route path="/advisor" element={<AdvisorDashboard />} />
+    <Route path="/advisor" element={<Advisor />} />
+    <Route path="/advisor/plans/:id" element={<AdvisorPlans />} />
     </>
   )
 )

@@ -162,24 +162,67 @@ app.get('/getPlan/:id', async (req, res) => {
         const plan = await Schedule.findById(req.params.id)
             .populate('owner', 'firstName lastName username')
             .populate('courses', 'name semestersOffered prereqs')
-            .populate('advisors', 'firstName lastName')
-            .populate('comments');
+            .populate('advisors', 'firstName lastName'); // optional if you use advisors
+
         if (!plan) {
             return res.status(404).send({ error: 'Plan not found' });
         }
+
         res.send(plan);
     }
     catch (error) {
         console.error('Error getting plan:', error);
         res.status(500).send(error);
     }
-})
+});
+
+// Advisor: Get ALL student plans in the system
+app.get('/advisor/getAllPlans', async (req, res) => {
+    try {
+        const plans = await Schedule.find()
+            .populate('owner', 'firstName lastName username')
+            .populate('courses', 'name semestersOffered');
+        
+        res.send(plans);
+    } catch (error) {
+        console.error('Error getting all plans for advisor:', error);
+        res.status(500).send(error);
+    }
+});
+
+// Advisor: Add a comment to a plan
+app.post('/advisor/addComment', async (req, res) => {
+    try {
+        const { planId, authorName, text } = req.body;
+
+        if (!planId || !text) {
+            return res.status(400).send({ error: "planId and text are required" });
+        }
+
+        const comment = {
+            authorName: authorName || "Advisor",
+            text,
+            createdAt: new Date()
+        };
+
+        const updatedPlan = await Schedule.findByIdAndUpdate(
+            planId,
+            { $push: { comments: comment } },
+            { new: true }
+        );
+
+        res.send(updatedPlan);
+    } catch (error) {
+        console.error("Error adding comment:", error);
+        res.status(500).send(error);
+    }
+});
+
 
 // Daevon's portion
 
 const majorsRoutes = require('./RouteMajors');
 
-const app = express();
 app.use(cors());
 app.use(express.json());
 
