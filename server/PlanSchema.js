@@ -6,7 +6,7 @@ const CommentSchema = new mongoose.Schema({
   createdAt: { type: Date, default: Date.now },
 });
 
-const ScheduleSchema = new mongoose.Schema({
+const PlanSchema = new mongoose.Schema({
   owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   name: { type: String, default: 'My Plan' },
   public: { type: Boolean, default: false },
@@ -16,6 +16,6 @@ const ScheduleSchema = new mongoose.Schema({
   comments: [CommentSchema],  
 });
 
-const Schedule = mongoose.model("Schedule", ScheduleSchema);
+const Plan = mongoose.model("Plan", PlanSchema);
 
-module.exports = Schedule;
+module.exports = Plan;

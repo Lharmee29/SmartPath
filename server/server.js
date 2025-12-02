@@ -3,7 +3,7 @@ const express = require('express');
 const cors = require('cors');
 const app = express();
 const User = require('./UserSchema');
-const Schedule = require('./ScheduleSchema');
+const Plan = require('./PlanSchema');
 const Course = require('./CourseSchema');
 app.use(express.json());
 app.use(cors())
@@ -61,7 +61,7 @@ app.get('/getUser', async (req, res) => {
 // Get all public plans from other users
 app.get('/getPublicPlans', async (req, res) => {
     try {
-        const publicPlans = await Schedule.find({ public: true })
+        const publicPlans = await Plan.find({ public: true })
             .populate('owner', 'firstName lastName username')
             .populate('courses', 'name semestersOffered')
             .sort({ modified: -1 });
@@ -80,7 +80,7 @@ app.get('/getUserPlans', async (req, res) => {
         return res.status(400).send({ error: 'UserId is required' });
     }
     try {
-        const userPlans = await Schedule.find({ owner: userId })
+        const userPlans = await Plan.find({ owner: userId })
             .populate('courses', 'name semestersOffered')
             .sort({ modified: -1 });
         res.send(userPlans);
@@ -98,7 +98,7 @@ app.post('/createPlan', async (req, res) => {
         if (!owner) {
             return res.status(400).send({ error: 'Owner is required' });
         }
-        const plan = new Schedule({
+        const plan = new Plan({
             owner,
             name: name || 'My Plan',
             courses: courses || [],
@@ -111,7 +111,7 @@ app.post('/createPlan', async (req, res) => {
             $push: { schedules: savedPlan._id }
         });
         
-        const populatedPlan = await Schedule.findById(savedPlan._id)
+        const populatedPlan = await Plan.findById(savedPlan._id)
             .populate('owner', 'firstName lastName username')
             .populate('courses', 'name semestersOffered');
         
@@ -132,7 +132,7 @@ app.put('/updatePlanVisibility', async (req, res) => {
         }
         
         // Verify the user owns this plan
-        const plan = await Schedule.findById(planId);
+        const plan = await Plan.findById(planId);
         if (!plan) {
             return res.status(404).send({ error: 'Plan not found' });
         }
@@ -144,7 +144,7 @@ app.put('/updatePlanVisibility', async (req, res) => {
         plan.modified = new Date();
         const updatedPlan = await plan.save();
         
-        const populatedPlan = await Schedule.findById(updatedPlan._id)
+        const populatedPlan = await Plan.findById(updatedPlan._id)
             .populate('owner', 'firstName lastName username')
             .populate('courses', 'name semestersOffered');
         
@@ -159,7 +159,7 @@ app.put('/updatePlanVisibility', async (req, res) => {
 // Get a specific plan with full details
 app.get('/getPlan/:id', async (req, res) => {
     try {
-        const plan = await Schedule.findById(req.params.id)
+        const plan = await Plan.findById(req.params.id)
             .populate('owner', 'firstName lastName username')
             .populate('courses', 'name semestersOffered prereqs')
             .populate('advisors', 'firstName lastName'); // optional if you use advisors
@@ -179,7 +179,7 @@ app.get('/getPlan/:id', async (req, res) => {
 // Advisor: Get ALL student plans in the system
 app.get('/advisor/getAllPlans', async (req, res) => {
     try {
-        const plans = await Schedule.find()
+        const plans = await Plan.find()
             .populate('owner', 'firstName lastName username')
             .populate('courses', 'name semestersOffered');
         
@@ -205,7 +205,7 @@ app.post('/advisor/addComment', async (req, res) => {
             createdAt: new Date()
         };
 
-        const updatedPlan = await Schedule.findByIdAndUpdate(
+        const updatedPlan = await Plan.findByIdAndUpdate(
             planId,
             { $push: { comments: comment } },
             { new: true }

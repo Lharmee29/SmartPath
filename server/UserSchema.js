@@ -5,7 +5,7 @@ const UserSchema = new mongoose.Schema({
     lastName: String,
     username: String,
     password: String,
-    schedules: [mongoose.Schema.Types.ObjectId]
+    plans: [mongoose.Schema.Types.ObjectId]
 });
 
 const User = mongoose.model("User", UserSchema);
