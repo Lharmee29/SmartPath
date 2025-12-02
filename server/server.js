@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const app = express();
@@ -174,3 +175,19 @@ app.get('/getPlan/:id', async (req, res) => {
     }
 })
 
+// Daevon's portion
+
+const majorsRoutes = require('./RouteMajors');
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+// other existing routes here...
+
+app.use('/api', majorsRoutes);
+
+const PORT = process.env.PORT || 9000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
