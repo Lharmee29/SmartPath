@@ -1,33 +1,19 @@
 import React from "react";
 
 const Dashboard = () => {
-  const fullName = localStorage.getItem("userFullName") || "User";
+  const userName = localStorage.getItem("userName");
 
   return (
-    <div style={{ padding: "40px", textAlign: "center" }}>
-      <h1>Welcome, {fullName}!</h1>
+    <div className="page-header">
+      <h1>Welcome {userName}</h1>
+      <h2>SmartPath Dashboard</h2>
 
-      <div style={{ marginTop: "30px" }}>
-        <button onClick={() => (window.location.href = "/CreatePlan")}
-          style={{ padding: "15px 25px", margin: "10px" }}>
-          Create Plan
-        </button>
-
-        <button onClick={() => (window.location.href = "/ViewPlans")}
-          style={{ padding: "15px 25px", margin: "10px" }}>
-          View My Plans
-        </button>
-
-        <button onClick={() => (window.location.href = "/CommunityPlans")}
-          style={{ padding: "15px 25px", margin: "10px" }}>
-          Community Plans
-        </button>
-
-        <button onClick={() => (window.location.href = "/AdvisorFeedback")}
-          style={{ padding: "15px 25px", margin: "10px" }}>
-          Advisor Feedback
-        </button>
-      </div>
+      <button onClick={() => (window.location.href = "/createTeam")}>
+        Create Team
+      </button>
+      <button onClick={() => (window.location.href = "/createProject")}>
+        Create Project
+      </button>
     </div>
   );
 };
