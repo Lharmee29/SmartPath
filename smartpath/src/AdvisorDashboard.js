@@ -61,16 +61,15 @@ function AdvisorDashboard() {
         <tbody>
           {plans.map((plan) => (
             <tr key={plan._id}>
-              {/* change fields later to match ScheduleSchema */}
               <td>
                 {plan.owner?.firstName} {plan.owner?.lastName} (
                 {plan.owner?.username})
               </td>
               <td>{plan.name || "Untitled plan"}</td>
               <td>
-                <button>
-                  View Plan
-                </button>
+                <Link to={`/advisor/plans/${plan._id}`}>
+                  <button>View Plan</button>
+                </Link>
               </td>
             </tr>
           ))}

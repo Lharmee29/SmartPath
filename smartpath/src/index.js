@@ -29,7 +29,7 @@ const router = createBrowserRouter(
     <Route path="/ViewPlans" element={<ViewPlans />} />
     <Route path="/CommunityPlans" element={<CommunityPlans />} />
     <Route path="/AdvisorFeedback" element={<AdvisorFeedback />} />
-    <Route path="/advisor" element={<AdvisorDashboard />} />
+    <Route path="/advisorDashboard" element={<AdvisorDashboard />} />
     <Route path="/advisor" element={<Advisor />} />
     <Route path="/advisor/plans/:id" element={<AdvisorPlans />} />
     </>
