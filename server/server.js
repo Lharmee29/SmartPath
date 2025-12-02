@@ -91,6 +91,19 @@ app.get('/getUserPlans', async (req, res) => {
     }
 })
 
+app.post('/createPlan2', async (req, res) => {
+    try {
+            const plan = new Plan(req.body);
+            plan.save()
+            console.log(`Plan created! ${plan}`)
+            res.send(plan)
+    }
+    catch (error){
+        console.log(error)
+        res.status(500).send(error)
+    }
+})
+
 // Create a new plan
 app.post('/createPlan', async (req, res) => {
     try {
