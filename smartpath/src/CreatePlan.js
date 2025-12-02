@@ -2,10 +2,10 @@ import React, { useEffect, useState} from "react";
 import './default.css';
 import axios from 'axios'
 
-const handleCreatePlan = (event, name, public_access, courses, advisors, comments) => {
+const handleCreatePlan = (event, owner, name, courses, isPublic) => {
     const modified = Date.now
     event.preventDefault()
-    axios.post('http://localhost:9000/createPlan2', {name, public_access, modified, courses, advisors, comments })
+    axios.post('http://localhost:9000/createPlan', {owner, name, courses, isPublic})
     .catch((err) => alert('err making plan'))
 }
 
@@ -15,7 +15,7 @@ const API_BASE_URL =
 
 const CreatePlan = () => {
 	const [name, setName] = useState('');
-    const [public_access, setPublic] = useState(false);
+    const [isPublic, setPublic] = useState(false);
     const [courses, setCourses] = useState([])
     const [comments, setComments] = useState([]);
     const [advisors, setAdvisors] = useState([])
@@ -24,6 +24,8 @@ const CreatePlan = () => {
 	const [majorsError, setMajorsError] = useState(null);
 	const [selectedMajorId, setSelectedMajorId] = useState("");
 	const [selectedMajor, setSelectedMajor] = useState(null);
+	const [electiveId, setSelectedElectiveId] = useState(null);
+	const [elective, setSelectedElective] = useState(null);
 	const [loadingMajorDetails, setLoadingMajorDetails] = useState(false);
 	const [majorError, setMajorError] = useState(null);
 
@@ -94,6 +96,7 @@ const CreatePlan = () => {
 
     setSelectedElective(elective || null);
   };
+  const owner = localStorage.getItem("user")
 	
   return (
     <div sclass="page-header">
@@ -103,11 +106,11 @@ const CreatePlan = () => {
           <label for="name">Plan name:</label><br />
           <input type="text" value={name} onChange={(e) => setName(e.target.value)}/><br />
           <label for="public">Public? </label>
-          <select onChange={(e) => setPublic(e.target.value)} value={public_access}>
+          <select onChange={(e) => setPublic(e.target.value)} value={isPublic}>
               <option value={false}>No</option>
               <option value={true}>Yes</option>
           </select>
-          <button type="button" onClick={(event) => handleCreatePlan(event, name, public_access, courses, advisors, comments)}>
+          <button type="button" onClick={(event) => handleCreatePlan(event, owner, name, courses, isPublic)}>
                         Create Plan
           </button>
         </form>

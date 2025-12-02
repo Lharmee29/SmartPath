@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+//const majors = require('../majors');
 
 const CommentSchema = new mongoose.Schema({
   authorName: { type: String, default: "Advisor" },
