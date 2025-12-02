@@ -79,6 +79,22 @@ const CreatePlan = () => {
     }
   };
 
+	const handleSelectElective = (event) => {
+    const electiveId = event.target.value;
+    setSelectedElectiveId(electiveId);
+
+    if (!electiveId || !selectedMajor || !selectedMajor.electives) {
+      setSelectedElective(null);
+      return;
+    }
+
+    const elective = selectedMajor.electives.find(
+      (e) => e.id === electiveId
+    );
+
+    setSelectedElective(elective || null);
+  };
+	
   return (
     <div sclass="page-header">
       <h1>Create Plan</h1>
