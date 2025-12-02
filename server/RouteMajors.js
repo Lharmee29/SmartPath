@@ -1,6 +1,6 @@
 // server/routes/majors.js
 const express = require('express');
-const majors = require('../data/majors');
+const majors = require('./majors');
 
 const router = express.Router();
 
