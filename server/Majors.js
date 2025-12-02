@@ -28,6 +28,18 @@ const majors = [
       { code: 'IT 267', name: 'Is Comp Sci Better', credits: 4, suggestedTerm: 'Spring 1' },
     ],
   },
+   {
+    id: 'elects',
+    name: 'Electives',
+    description: 'Simplified Elective Choices with 4 example classes.',
+    totalCredits: 24,
+    requiredCourses: [
+      { code: 'HS 101', name: 'US History', credits: 4, suggestedTerm: 'Fall 1' },
+      { code: 'EN 210', name: 'Writing Inquery', credits: 4, suggestedTerm: 'Spring 1' },
+      { code: 'MA 113', name: 'Calculus 1', credits: 4, suggestedTerm: 'Fall 1' },
+      { code: 'EC 330', name: 'The Economic State of the World Right Now', credits: 4, suggestedTerm: 'Spring 1' },
+    ],
+  },
 ];
 
 module.exports = majors;
