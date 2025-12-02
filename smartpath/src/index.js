@@ -32,6 +32,9 @@ const router = createBrowserRouter(
     <Route path="/advisor" element={<AdvisorDashboard />} />
     <Route path="/advisor" element={<Advisor />} />
     <Route path="/advisor/plans/:id" element={<AdvisorPlans />} />
+    <Route path="/dashboard" element={<Dashboard />} />
+    <Route path="/createTeam" element={<CreateTeam />} />
+    <Route path="/createProject" element={<CreateProject />} />
     </>
   )
 )
