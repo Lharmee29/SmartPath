@@ -6,10 +6,10 @@ const User = require('./UserSchema');
 const Plan = require('./PlanSchema');
 const Course = require('./CourseSchema');
 app.use(express.json());
-app.use(cors())
+app.use(cors());
 app.listen(9000, ()=> {
     console.log('Server Started at {9000}')
-})
+});
 
 const mongoose = require('mongoose');
 const mongoString = "mongodb+srv://ggduplan23:IbfP35dg8N2etsBm@cluster0.ycfq01g.mongodb.net/cluster0"
@@ -247,3 +247,4 @@ const PORT = process.env.PORT || 9000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
