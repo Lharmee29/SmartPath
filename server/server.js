@@ -7,6 +7,7 @@ const Plan = require('./PlanSchema');
 const Course = require('./CourseSchema');
 app.use(express.json());
 app.use(cors());
+app.use(express.urlencoded({ extended: true }));
 app.listen(9000, ()=> {
     console.log('Server Started at {9000}')
 });
@@ -247,4 +248,5 @@ const PORT = process.env.PORT || 9000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
 
