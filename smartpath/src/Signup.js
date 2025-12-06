@@ -18,6 +18,7 @@ const Signup = () => {
         lastName,
         username,
         password, 
+        isAdvisor,
       })
       .then(() => {
         alert("Signup successful! You can now log in.");
