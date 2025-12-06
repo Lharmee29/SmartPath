@@ -38,8 +38,9 @@ app.post('/createUser', async (req, res) => {
         })
     }
     catch (error){
-
-        res.status(500).send(error)
+        console.error('Error in /createUser:', err);
+    return res.status(500).json({ message: 'Server error while creating user' });
+        
     }
 })
 
@@ -248,5 +249,6 @@ const PORT = process.env.PORT || 9000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
 
 
