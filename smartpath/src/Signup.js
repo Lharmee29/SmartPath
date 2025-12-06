@@ -17,8 +17,7 @@ const Signup = () => {
         firstName,
         lastName,
         username,
-        password,
-        isAdvisor, 
+        password, 
       })
       .then(() => {
         alert("Signup successful! You can now log in.");
@@ -103,3 +102,4 @@ const Signup = () => {
 };
 
 export default Signup;
+
