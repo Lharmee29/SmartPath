@@ -13,6 +13,7 @@ import AdvisorDashboard from "./AdvisorDashboard";
 import Advisor from "./Advisor";
 import AdvisorPlans from "./AdvisorPlans";
 import reportWebVitals from './reportWebVitals';
+import PlanDetails from "./PlanDetails";
 import 'bootstrap/dist/css/bootstrap.css';
 import {Route, createBrowserRouter, createRoutesFromElements, RouterProvider} from 'react-router-dom';
 
@@ -32,6 +33,7 @@ const router = createBrowserRouter(
     <Route path="/advisorDashboard" element={<AdvisorDashboard />} />
     <Route path="/advisor" element={<Advisor />} />
     <Route path="/advisor/plan/:id" element={<AdvisorPlans />} />
+    <Route path="/plans/:planId" element={<PlanDetails />} />
     </>
   )
 )

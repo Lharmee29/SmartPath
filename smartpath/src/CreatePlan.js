@@ -1,58 +1,54 @@
-import React, { useEffect, useState} from "react";
-import './default.css';
-import axios from 'axios'
-
-const handleCreatePlan = (event, owner, name, courses, isPublic) => {
-    const modified = Date.now
-    event.preventDefault()
-    axios.post('http://localhost:9000/createPlan', {owner, name, courses, isPublic})
-    .catch((err) => alert('err making plan'))
-}
-
+import React, { useEffect, useState } from "react";
+import "./default.css";
+import axios from "axios";
 
 const API_BASE_URL =
   process.env.REACT_APP_API_BASE_URL || "http://localhost:9000/api";
 
 const CreatePlan = () => {
-	const [name, setName] = useState('');
-    const [isPublic, setPublic] = useState(false);
-    const [courses, setCourses] = useState([])
-    const [comments, setComments] = useState([]);
-    const [advisors, setAdvisors] = useState([])
-	const [majors, setMajors] = useState([]);
-	const [loadingMajors, setLoadingMajors] = useState(true);
-	const [majorsError, setMajorsError] = useState(null);
-	const [selectedMajorId, setSelectedMajorId] = useState("");
-	const [selectedMajor, setSelectedMajor] = useState(null);
-	const [electiveId, setSelectedElectiveId] = useState(null);
-	const [elective, setSelectedElective] = useState(null);
-	const [loadingMajorDetails, setLoadingMajorDetails] = useState(false);
-	const [majorError, setMajorError] = useState(null);
+  const [name, setName] = useState("");
+  const [isPublic, setPublic] = useState(false);
+  const [courses, setCourses] = useState([]);
+  const [comments, setComments] = useState([]);
+  const [advisors, setAdvisors] = useState([]);
 
-	// 1) Load list of majors on first render
-	useEffect(() => {
-		const fetchMajors = async () => {
-		try {
-			setLoadingMajors(true);
-			setMajorsError(null);
+  const [majors, setMajors] = useState([]);
+  const [loadingMajors, setLoadingMajors] = useState(true);
+  const [majorsError, setMajorsError] = useState(null);
 
-			const res = await fetch(`${API_BASE_URL}/majors`);
-			if (!res.ok) {
-			throw new Error(`HTTP error ${res.status}`);
-			}
+  const [selectedMajorId, setSelectedMajorId] = useState("");
+  const [selectedMajor, setSelectedMajor] = useState(null);
 
-			const data = await res.json();
-			setMajors(data);
-		} catch (err) {
-			console.error("Error fetching majors:", err);
-			setMajorsError("Could not load majors. Please try again later.");
-		} finally {
-			setLoadingMajors(false);
-		}
-		};
+  const [loadingMajorDetails, setLoadingMajorDetails] = useState(false);
+  const [majorError, setMajorError] = useState(null);
 
-		fetchMajors();
-	}, []);
+  // get the logged-in user id from localStorage (set in Login.jsx)
+  const ownerId = localStorage.getItem("userId");
+
+  // 1) Load list of majors on first render
+  useEffect(() => {
+    const fetchMajors = async () => {
+      try {
+        setLoadingMajors(true);
+        setMajorsError(null);
+
+        const res = await fetch(`${API_BASE_URL}/majors`);
+        if (!res.ok) {
+          throw new Error(`HTTP error ${res.status}`);
+        }
+
+        const data = await res.json();
+        setMajors(data);
+      } catch (err) {
+        console.error("Error fetching majors:", err);
+        setMajorsError("Could not load majors. Please try again later.");
+      } finally {
+        setLoadingMajors(false);
+      }
+    };
+
+    fetchMajors();
+  }, []);
 
   // 2) When user selects a major, load its required courses
   const handleSelectMajor = async (event) => {
@@ -61,7 +57,7 @@ const CreatePlan = () => {
     setSelectedMajor(null);
     setMajorError(null);
 
-    if (!majorId) return; // user picked "Choose a major"
+    if (!majorId) return;
 
     try {
       setLoadingMajorDetails(true);
@@ -73,6 +69,7 @@ const CreatePlan = () => {
 
       const data = await res.json();
       setSelectedMajor(data);
+      // NOTE: we are NOT putting these into courses[] yet.
     } catch (err) {
       console.error("Error fetching major details:", err);
       setMajorError("Could not load major details.");
@@ -81,39 +78,125 @@ const CreatePlan = () => {
     }
   };
 
-	const handleSelectElective = (event) => {
-    const electiveId = event.target.value;
-    setSelectedElectiveId(electiveId);
+  const handleCreatePlan = async (event) => {
+  event.preventDefault();
 
-    if (!electiveId || !selectedMajor || !selectedMajor.electives) {
-      setSelectedElective(null);
-      return;
+  if (!ownerId) {
+    alert("No logged in user found. Please log in again.");
+    return;
+  }
+
+  try {
+    const body = {
+      owner: ownerId,
+      name: name || "My Plan",
+      courses: [],           // we’re not using Course documents yet
+      public: isPublic,
+    };
+
+    // If a major is selected, include it + its courses
+    if (selectedMajor) {
+      body.majorId = selectedMajor.id;
+      body.majorName = selectedMajor.name;
+      body.majorCourses = selectedMajor.requiredCourses || [];
     }
 
-    const elective = selectedMajor.electives.find(
-      (e) => e.id === electiveId
-    );
+    const res = await axios.post("http://localhost:9000/createPlan", body);
+    console.log("Plan created:", res.data);
+    alert("Plan created!");
 
-    setSelectedElective(elective || null);
-  };
-  const owner = localStorage.getItem("user")
-	
+    // simple reset for now
+    setName("");
+    setPublic(false);
+    setCourses([]);
+  } catch (err) {
+    console.error("Error creating plan:", err);
+    alert("Error making plan");
+  }
+};
+
   return (
-    <div sclass="page-header">
+    <div className="page-header">
       <h1>Create Plan</h1>
-      <div class="box">
-        <form>
-          <label for="name">Plan name:</label><br />
-          <input type="text" value={name} onChange={(e) => setName(e.target.value)}/><br />
-          <label for="public">Public? </label>
-          <select onChange={(e) => setPublic(e.target.value)} value={isPublic}>
-              <option value={false}>No</option>
-              <option value={true}>Yes</option>
+
+      {/* Plan basic settings */}
+      <div className="box">
+        <form onSubmit={handleCreatePlan}>
+          <label htmlFor="plan-name">Plan name:</label>
+          <br />
+          <input
+            id="plan-name"
+            type="text"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
+          <br />
+
+          <label htmlFor="public-select">Public? </label>
+          <br />
+          <select
+            id="public-select"
+            onChange={(e) => setPublic(e.target.value === "true")}
+            value={isPublic ? "true" : "false"}
+          >
+            <option value="false">No</option>
+            <option value="true">Yes</option>
           </select>
-          <button type="button" onClick={(event) => handleCreatePlan(event, owner, name, courses, isPublic)}>
-                        Create Plan
-          </button>
+
+          <br />
+          <br />
+          <button type="submit">Create Plan</button>
         </form>
+      </div>
+
+      {/* Major selection + details */}
+      <div className="box" style={{ marginTop: "20px" }}>
+        <h2>Select a Major</h2>
+
+        {loadingMajors && <p>Loading majors...</p>}
+
+        {majorsError && <p style={{ color: "red" }}>{majorsError}</p>}
+
+        {!loadingMajors && !majorsError && (
+          <>
+            <label htmlFor="major-select">Major:</label>
+            <br />
+            <select
+              id="major-select"
+              value={selectedMajorId}
+              onChange={handleSelectMajor}
+            >
+              <option value="">-- Choose a major --</option>
+              {majors.map((m) => (
+                <option key={m.id} value={m.id}>
+                  {m.name}
+                </option>
+              ))}
+            </select>
+
+            {loadingMajorDetails && <p>Loading major details...</p>}
+            {majorError && <p style={{ color: "red" }}>{majorError}</p>}
+
+            {selectedMajor && (
+              <div style={{ marginTop: "15px" }}>
+                <h3>{selectedMajor.name}</h3>
+                <p>{selectedMajor.description}</p>
+                <p>Total credits: {selectedMajor.totalCredits}</p>
+
+                <h4>Required Courses</h4>
+                <ul>
+                  {selectedMajor.requiredCourses &&
+                    selectedMajor.requiredCourses.map((c) => (
+                      <li key={c.code}>
+                        {c.code} – {c.name} ({c.credits} credits,{" "}
+                        {c.suggestedTerm})
+                      </li>
+                    ))}
+                </ul>
+              </div>
+            )}
+          </>
+        )}
       </div>
     </div>
   );

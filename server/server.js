@@ -105,36 +105,50 @@ app.post('/createPlan2', async (req, res) => {
 })
 
 // Create a new plan
-app.post('/createPlan', async (req, res) => {
-    try {
-        const { owner, name, courses, public: isPublic } = req.body;
-        if (!owner) {
-            return res.status(400).send({ error: 'Owner is required' });
-        }
-        const plan = new Plan({
-            owner,
-            name: name || 'My Plan',
-            courses: courses || [],
-            public: isPublic || false
-        });
-        const savedPlan = await plan.save();
-        
-        // Add plan to user's schedules array
-        await User.findByIdAndUpdate(owner, {
-            $push: { schedules: savedPlan._id }
-        });
-        
-        const populatedPlan = await Plan.findById(savedPlan._id)
-            .populate('owner', 'firstName lastName username')
-            .populate('courses', 'name semestersOffered');
-        
-        res.send(populatedPlan);
+app.post("/createPlan", async (req, res) => {
+  try {
+    const {
+      owner,
+      name,
+      courses,
+      public: isPublic,
+      majorId,
+      majorName,
+      majorCourses,
+    } = req.body;
+
+    if (!owner) {
+      return res.status(400).send({ error: "Owner is required" });
     }
-    catch (error) {
-        console.error('Error creating plan:', error);
-        res.status(500).send(error);
-    }
-})
+
+    const plan = new Plan({
+      owner,
+      name: name || "My Plan",
+      courses: courses || [],
+      public: isPublic || false,
+      majorId: majorId || null,
+      majorName: majorName || null,
+      majorCourses: majorCourses || [],
+    });
+
+    const savedPlan = await plan.save();
+
+    // Add plan to user's schedules array
+    await User.findByIdAndUpdate(owner, {
+      $push: { schedules: savedPlan._id },
+    });
+
+    const populatedPlan = await Plan.findById(savedPlan._id)
+      .populate("owner", "firstName lastName username")
+      .populate("courses", "name semestersOffered");
+
+    res.send(populatedPlan);
+  } catch (error) {
+    console.error("Error creating plan:", error);
+    res.status(500).send(error);
+  }
+});
+
 
 // Update plan visibility (publish/unpublish)
 app.put('/updatePlanVisibility', async (req, res) => {
@@ -175,7 +189,7 @@ app.get('/getPlan/:id', async (req, res) => {
         const plan = await Plan.findById(req.params.id)
             .populate('owner', 'firstName lastName username')
             .populate('courses', 'name semestersOffered prereqs')
-            .populate('advisors', 'firstName lastName'); // optional if you use advisors
+            .populate('advisors', 'firstName lastName');
 
         if (!plan) {
             return res.status(404).send({ error: 'Plan not found' });
