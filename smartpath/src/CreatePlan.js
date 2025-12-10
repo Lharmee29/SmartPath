@@ -74,7 +74,7 @@ const CreatePlan = () => {
     }
   };
 
-  const handleCreatePlan = async (event) => {
+ const handleCreatePlan = async (event) => {
   event.preventDefault();
 
   if (!ownerId) {
@@ -105,7 +105,6 @@ const CreatePlan = () => {
     // simple reset for now
     setName("");
     setPublic(false);
-    setCourses([]);
   } catch (err) {
     console.error("Error creating plan:", err);
     alert("Error making plan");
