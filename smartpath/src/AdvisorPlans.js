@@ -8,6 +8,15 @@ function AdvisorPlans() {
   const [newComment, setNewComment] = useState("");
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
+  const formatSemestersOffered = (semestersOffered) => {
+  if (!semestersOffered) return "";
+
+  const offered = Object.entries(semestersOffered)
+    .filter(([_, val]) => val)
+    .map(([sem]) => sem.charAt(0).toUpperCase() + sem.slice(1));
+
+  return offered.length ? `— Offered: ${offered.join(", ")}` : "";
+};
 
   // Load the plan details
   useEffect(() => {
@@ -85,21 +94,19 @@ function AdvisorPlans() {
         {plan.owner?.firstName} {plan.owner?.lastName} ({plan.owner?.username})
       </p>
 
-      <h3>Courses in this plan:</h3>
-      {plan.courses && plan.courses.length > 0 ? (
-        <ul>
-          {plan.courses.map((course) => (
-            <li key={course._id}>
-              {course.name}{" "}
-              {course.semestersOffered
-                ? `— Offered: ${course.semestersOffered.join(", ")}`
-                : ""}
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No courses listed in this plan.</p>
-      )}
+    <h3>Courses in this plan:</h3>
+{plan.courses && plan.courses.length > 0 ? (
+  <ul>
+    {plan.courses.map((course) => (
+      <li key={course._id}>
+        {course.name}{" "}
+        {formatSemestersOffered(course.semestersOffered)}
+      </li>
+    ))}
+  </ul>
+) : (
+  <p>No courses listed in this plan.</p>
+)}
 
       <h3 style={{ marginTop: "30px" }}>Existing Advisor Comments:</h3>
       {plan.comments && plan.comments.length > 0 ? (
