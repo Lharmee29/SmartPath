@@ -6,10 +6,11 @@ const UserSchema = new mongoose.Schema({
     username: String,
     password: String,
 
-    plans: [{ type: mongoose.Schema.Types.ObjectId, ref: "Schedule" }],
+    plans: [{ type: mongoose.Schema.Types.ObjectId, ref: "Plan" }],
 
     isAdvisor: { type: Boolean, default: false },
 });
 
 const User = mongoose.model("User", UserSchema);
 module.exports = User;
+
