@@ -100,6 +100,24 @@ const PlanDetails = () => {
           </>
         )}
       </div>
+              <div className="box" style={{ marginTop: "20px" }}>
+        <h3>Advisor Comments</h3>
+        {plan.comments && plan.comments.length > 0 ? (
+          <ul>
+            {plan.comments.map((c, idx) => (
+              <li key={idx} style={{ marginBottom: "8px" }}>
+                <strong>{c.authorName || "Advisor"}:</strong>{" "}
+                {c.text}{" "}
+                <span style={{ fontSize: "0.85em", color: "#666" }}>
+                  ({new Date(c.createdAt).toLocaleString()})
+                </span>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No advisor feedback yet.</p>
+        )}
+      </div>
     </div>
   );
 };
