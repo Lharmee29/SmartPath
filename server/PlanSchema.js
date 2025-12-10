@@ -29,12 +29,15 @@ const PlanSchema = new mongoose.Schema({
   advisors: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
   comments: [CommentSchema],
 
-  // 🔹 NEW: store the chosen major + its courses right in the plan
+  // store the chosen major + its courses right in the plan
   majorId: { type: String },
   majorName: { type: String },
   majorCourses: [MajorCourseSchema],
+  desiredGradTerm: String,   // e.g., "Spring"/"Fall"
+  desiredGradYear: Number,   // e.g., 2027
 });
 
 const Plan = mongoose.model("Plan", PlanSchema);
 
 module.exports = Plan;
+
