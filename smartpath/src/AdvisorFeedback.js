@@ -110,7 +110,26 @@ const AdvisorFeedback = () => {
             </div>
           ))
         )}
+            </div>
+
+      {/* BACK TO DASHBOARD BUTTON */}
+      <div style={{ textAlign: "center", marginTop: "25px" }}>
+        <button
+          onClick={() => (window.location.href = "/Dashboard")}
+          style={{
+            padding: "10px 24px",
+            backgroundColor: "#006bc2",
+            color: "white",
+            border: "none",
+            borderRadius: "6px",
+            cursor: "pointer",
+            fontWeight: "600",
+          }}
+        >
+          Back to Dashboard
+        </button>
       </div>
+
     </div>
   );
 };
