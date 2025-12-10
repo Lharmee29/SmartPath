@@ -104,6 +104,7 @@ const CreatePlan = () => {
     const res = await axios.post("http://localhost:9000/createPlan", body);
     console.log("Plan created:", res.data);
     alert("Plan created!");
+    window.location.href = "/ViewPlans";
 
     // simple reset for now
     setName("");
