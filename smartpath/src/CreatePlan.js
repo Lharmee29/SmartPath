@@ -193,6 +193,23 @@ const CreatePlan = () => {
             )}
           </>
         )}
+          </div>
+
+      {/* Back to Dashboard */}
+      <div style={{ marginTop: "20px", textAlign: "center" }}>
+        <button
+          onClick={() => (window.location.href = "/Dashboard")}
+          style={{
+            padding: "10px 20px",
+            backgroundColor: "#006bc2",
+            color: "white",
+            border: "none",
+            borderRadius: "4px",
+            cursor: "pointer",
+          }}
+        >
+          Back to Dashboard
+        </button>
       </div>
     </div>
   );

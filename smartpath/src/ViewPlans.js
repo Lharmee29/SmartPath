@@ -52,7 +52,7 @@ const ViewPlans = () => {
     <div className="page-header">
       <h1>My Plans</h1>
 
-      <div className="box">
+           <div className="box">
         {plans.length === 0 ? (
           <p>You have no saved plans yet.</p>
         ) : (
@@ -70,6 +70,23 @@ const ViewPlans = () => {
             ))}
           </ul>
         )}
+      </div>
+
+      {/* Back to Dashboard */}
+      <div style={{ marginTop: "20px", textAlign: "center" }}>
+        <button
+          onClick={() => (window.location.href = "/Dashboard")}
+          style={{
+            padding: "10px 20px",
+            backgroundColor: "#006bc2",
+            color: "white",
+            border: "none",
+            borderRadius: "4px",
+            cursor: "pointer",
+          }}
+        >
+          Back to Dashboard
+        </button>
       </div>
     </div>
   );

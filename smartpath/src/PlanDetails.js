@@ -117,6 +117,37 @@ const PlanDetails = () => {
         ) : (
           <p>No advisor feedback yet.</p>
         )}
+           </div>
+
+      <div style={{ marginTop: "20px", textAlign: "center" }}>
+        <button
+          onClick={() => (window.location.href = "/ViewPlans")}
+          style={{
+            padding: "10px 20px",
+            backgroundColor: "#6c757d",
+            color: "white",
+            border: "none",
+            borderRadius: "4px",
+            cursor: "pointer",
+            marginRight: "10px",
+          }}
+        >
+          Back to My Plans
+        </button>
+
+        <button
+          onClick={() => (window.location.href = "/Dashboard")}
+          style={{
+            padding: "10px 20px",
+            backgroundColor: "#006bc2",
+            color: "white",
+            border: "none",
+            borderRadius: "4px",
+            cursor: "pointer",
+          }}
+        >
+          Back to Dashboard
+        </button>
       </div>
     </div>
   );
