@@ -10,8 +10,6 @@ const CreatePlan = () => {
   const [isPublic, setPublic] = useState(false);
   const [gradTerm, setGradTerm] = useState(""); // "Fall", "Spring", etc.
   const [gradYear, setGradYear] = useState(""); // "2028", "2029", ...
-  const [gradTerm, setGradTerm] = useState(""); // "Fall", "Spring", etc.
-  const [gradYear, setGradYear] = useState(""); // "2028", "2029", ...
   const [majors, setMajors] = useState([]);
   const [loadingMajors, setLoadingMajors] = useState(true);
   const [majorsError, setMajorsError] = useState(null);
