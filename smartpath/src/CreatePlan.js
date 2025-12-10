@@ -8,10 +8,6 @@ const API_BASE_URL =
 const CreatePlan = () => {
   const [name, setName] = useState("");
   const [isPublic, setPublic] = useState(false);
-  const [courses, setCourses] = useState([]);
-  const [comments, setComments] = useState([]);
-  const [advisors, setAdvisors] = useState([]);
-
   const [majors, setMajors] = useState([]);
   const [loadingMajors, setLoadingMajors] = useState(true);
   const [majorsError, setMajorsError] = useState(null);
