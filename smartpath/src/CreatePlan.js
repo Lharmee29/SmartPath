@@ -8,6 +8,8 @@ const API_BASE_URL =
 const CreatePlan = () => {
   const [name, setName] = useState("");
   const [isPublic, setPublic] = useState(false);
+  const [gradTerm, setGradTerm] = useState(""); // "Fall", "Spring", etc.
+  const [gradYear, setGradYear] = useState(""); // "2028", "2029", ...
   const [majors, setMajors] = useState([]);
   const [loadingMajors, setLoadingMajors] = useState(true);
   const [majorsError, setMajorsError] = useState(null);
@@ -88,6 +90,8 @@ const CreatePlan = () => {
       name: name || "My Plan",
       courses: [],           // we’re not using Course documents yet
       public: isPublic,
+       desiredGradTerm: gradTerm || null,
+        desiredGradYear: gradYear ? Number(gradYear) : null,
     };
 
     // If a major is selected, include it + its courses
@@ -138,6 +142,33 @@ const CreatePlan = () => {
             <option value="false">No</option>
             <option value="true">Yes</option>
           </select>
+            {/* Desired graduation timeframe */}
+          <br /><br />
+          <label htmlFor="grad-term">Desired Graduation Term:</label>
+          <br />
+          <select
+            id="grad-term"
+            value={gradTerm}
+            onChange={(e) => setGradTerm(e.target.value)}
+          >
+            <option value="">-- Select term --</option>
+            <option value="Fall">Fall</option>
+            <option value="Spring">Spring</option>
+            <option value="Summer">Summer</option>
+          </select>
+
+          <br /><br />
+          <label htmlFor="grad-year">Desired Graduation Year:</label>
+          <br />
+          <input
+            id="grad-year"
+            type="number"
+            min="2025"
+            max="2040"
+            value={gradYear}
+            onChange={(e) => setGradYear(e.target.value)}
+            placeholder="e.g., 2028"
+          />
 
           <br />
           <br />
