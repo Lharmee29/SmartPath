@@ -9,45 +9,33 @@ const Dashboard = () => {
 
   return (
     <div style={{ padding: "40px", textAlign: "center" }}>
-     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-  <h1>Welcome, {fullName}!</h1>
-
-  <button
-    onClick={handleLogout}
-    style={{
-      padding: "10px 20px",
-      backgroundColor: "#d9534f",
-      color: "white",
-      border: "none",
-      borderRadius: "5px",
-      cursor: "pointer"
-    }}
-  >
-    Sign Out
-  </button>
-</div>
-
+      <h1 class="page-header">Welcome, {fullName}!</h1>
+      <div class="dashboard-ctr">
       <div style={{ marginTop: "30px" }}>
-        <button onClick={() => (window.location.href = "/CreatePlan")}
-          style={{ padding: "15px 25px", margin: "10px" }}>
-          Create Plan
-        </button>
+              <button onClick={() => (window.location.href = "/CreatePlan")}
+                class="dashboard-btn">
+                Create Plan
+              </button>
 
-        <button onClick={() => (window.location.href = "/ViewPlans")}
-          style={{ padding: "15px 25px", margin: "10px" }}>
-          View My Plans
-        </button>
+              <button onClick={() => (window.location.href = "/ViewPlans")}
+                class="dashboard-btn">
+                View My Plans
+              </button>
 
-        <button onClick={() => (window.location.href = "/CommunityPlans")}
-          style={{ padding: "15px 25px", margin: "10px" }}>
-          Community Plans
-        </button>
+              <button onClick={() => (window.location.href = "/CommunityPlans")}
+                class="dashboard-btn">
+                Community Plans
+              </button>
 
-       <button onClick={() => (window.location.href = "/ViewPlans")}
-       style={{ padding: "15px 25px", margin: "10px" }}>
-          Advisor Feedback
-        </button>
-      </div>
+            <button onClick={() => (window.location.href = "/AdvisorFeedback")}
+                class="dashboard-btn">
+                Advisor Feedback
+              </button>
+            </div>
+    </div> <br />
+      <button class="signout-btn" onClick={handleLogout} >
+        Sign Out
+      </button>
     </div>
   );
 };
