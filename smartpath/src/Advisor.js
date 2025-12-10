@@ -6,6 +6,11 @@ function Advisor() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  const handleLogout = () => {
+  localStorage.clear();
+  window.location.href = "/Login";
+};
+
   useEffect(() => {
     const fetchPlans = async () => {
       try {
@@ -33,11 +38,38 @@ function Advisor() {
   if (error) {
     return <p style={{ padding: 20 }}>{error}</p>;
   }
+//Advisor dashboard header (used in all cases)
+  const DashboardHeader = () => (
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        marginBottom: "20px",
+      }}
+    >
+      <h1>Advisor Dashboard</h1>
+
+      <button
+        onClick={handleLogout}
+        style={{
+          padding: "10px 20px",
+          backgroundColor: "#d9534f",
+          color: "white",
+          border: "none",
+          borderRadius: "5px",
+          cursor: "pointer",
+        }}
+      >
+        Sign Out
+      </button>
+    </div>
+  );
 
   if (plans.length === 0) {
     return (
       <div style={{ padding: 20 }}>
-        <h1>Advisor Dashboard</h1>
+        <DashboardHeader />
         <p>No student plans found in the system yet.</p>
         <p>Once students create plans, they will show up here.</p>
       </div>
@@ -46,7 +78,7 @@ function Advisor() {
 
   return (
     <div style={{ padding: 20 }}>
-      <h1>Advisor Dashboard</h1>
+      <DashboardHeader />
       <p>These plans are pulled from students saved in the system.</p>
 
       <table border="1" cellPadding="8" style={{ marginTop: 20 }}>
