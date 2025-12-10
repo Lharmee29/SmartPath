@@ -23,8 +23,8 @@ const Dashboard = () => {
           Community Plans
         </button>
 
-        <button onClick={() => (window.location.href = "/AdvisorFeedback")}
-          style={{ padding: "15px 25px", margin: "10px" }}>
+       <button onClick={() => (window.location.href = "/ViewPlans")}
+       style={{ padding: "15px 25px", margin: "10px" }}>
           Advisor Feedback
         </button>
       </div>
