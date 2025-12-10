@@ -9,7 +9,6 @@ import CreatePlan from './CreatePlan';
 import ViewPlans from './ViewPlans';
 import CommunityPlans from './CommunityPlans';
 import AdvisorFeedback from "./AdvisorFeedback";
-import AdvisorDashboard from "./AdvisorDashboard";
 import Advisor from "./Advisor";
 import AdvisorPlans from "./AdvisorPlans";
 import reportWebVitals from './reportWebVitals';
