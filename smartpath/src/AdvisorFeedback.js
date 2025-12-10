@@ -91,7 +91,7 @@ const AdvisorFeedback = () => {
                           <span
                             style={{
                               fontSize: "0.85em",
-                              color: "#666",
+                              color: "#b5deffff",
                               marginLeft: "6px",
                             }}
                           >

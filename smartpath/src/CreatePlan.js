@@ -91,9 +91,7 @@ const CreatePlan = () => {
       courses: [],           // we’re not using Course documents yet
       public: isPublic,
        desiredGradTerm: gradTerm || null,
-        desiredGradYear: gradYear ? Number(gradYear) : null,
-        desiredGradTerm: gradTerm || null,
-        desiredGradYear: gradYear ? Number(gradYear) : null,
+        desiredGradYear: gradYear ? Number(gradYear) : null
     };
 
       // If a major is selected, include it + its courses
@@ -147,34 +145,6 @@ const CreatePlan = () => {
             <option value="true">Yes</option>
           </select>
             {/* Desired graduation timeframe */}
-          <br /><br />
-          <label htmlFor="grad-term">Desired Graduation Term:</label>
-          <br />
-          <select
-            id="grad-term"
-            value={gradTerm}
-            onChange={(e) => setGradTerm(e.target.value)}
-          >
-            <option value="">-- Select term --</option>
-            <option value="Fall">Fall</option>
-            <option value="Spring">Spring</option>
-            <option value="Summer">Summer</option>
-          </select>
-
-          <br /><br />
-          <label htmlFor="grad-year">Desired Graduation Year:</label>
-          <br />
-          <input
-            id="grad-year"
-            type="number"
-            min="2025"
-            max="2040"
-            value={gradYear}
-            onChange={(e) => setGradYear(e.target.value)}
-            placeholder="e.g., 2028"
-          />
-
- {/* Desired graduation timeframe */}
           <br /><br />
           <label htmlFor="grad-term">Desired Graduation Term:</label>
           <br />
