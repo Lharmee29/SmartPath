@@ -1,4 +1,4 @@
-# SmartPath - A Degrere Planning tool
+# SmartPath - A Degree Planning tool
 
 ## Project Description
 This project was created as coursework for our software engineering course. SmartPath was envisioned as a web app that allows students to plan their degree as well as share those plans with advisors and other users. Users can:
